@@ -4,6 +4,7 @@ import { catchError, delay, map, Observable, of, tap } from 'rxjs';
 
 import { Country } from '../interfaces/country';
 import { CacheStore } from '../interfaces/cache-store.interface';
+import { Region } from '../interfaces/region.type';
 
 @Injectable({ providedIn: 'root' })
 
@@ -55,13 +56,13 @@ export class CountriesService {
     );
   }
 
-  searchRegion( region: string ): Observable<Country[]>{
+  searchRegion( region: Region ): Observable<Country[]>{
 
     const url = `${ this.apiUrl }/region/${ region }`;
     return this.getCountriesRequest(url)
-    // .pipe(
-    //   tap( countries => this.cacheStore.byRegion = {region, countries} )
-    // );
+    .pipe(
+      tap( countries => this.cacheStore.byRegion = { region , countries} )
+    );
   }
 
 }
